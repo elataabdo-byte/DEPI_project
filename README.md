@@ -184,28 +184,26 @@ flowchart TD
 > `[TODO: Reconcile this table with requirements.txt. Do not list libraries the repository does not use.]`
 
 ---
-
 ## 6. Dataset and Ground Truth
 
-Sentinel is built around **MetroPT-3**, a dataset of industrial air-compressor sensor measurements collected from a metro train's air production unit. It is used here for developing and demonstrating anomaly detection, failure-scenario analysis, and threshold-based diagnostics.
+Sentinel is built around **MetroPT-3**, a dataset of industrial air-compressor sensor measurements collected from a metro train's air production unit[cite: 1]. It is used here for developing and demonstrating anomaly detection, failure-scenario analysis, and threshold-based diagnostics.
 
 | Item | Details |
 |---|---|
-| Dataset source and official link | `[TODO: insert official source and URL]` |
-| License and usage conditions | `[TODO: insert license / terms of use]` |
-| Sensor descriptions and units | `[TODO: insert verified sensor table — name, meaning, unit, normal range]` |
-| Failure-event timestamps | `[TODO: insert failure start/end timestamps from the official documentation]` |
-| Ground-truth labeling strategy | `[TODO: describe how windows are labeled, e.g., normal / pre-failure / failure, and any margin before failure events]` |
-| Train/validation/test split | `[TODO: describe chronological split strategy and boundaries]` |
+| Dataset source and official link | **MetroPT-3 Dataset**, hosted publicly on [Kaggle (MetroPT-3 Dataset)](https://www.kaggle.com/datasets/inesctec/metropt-3) and provided by INESC TEC[cite: 1]. |
+| License and usage conditions | Open Data / Research License (Free to use for academic, research, and non-commercial predictive maintenance projects as per Kaggle terms). |
+| Sensor descriptions and units | Includes 15+ industrial telemetry sensors measuring pneumatic pressures (`TP1`, `TP2`, `PS1`, `PS2`, `PS3`), compressor temperatures (`Oil_Temp`, `MOTOR_T1`), motor currents (`DV_pressure`, `Flow_meter`), and digital operational flags (`COMP`, `DV_eletric`, `Towers`). |
+| Failure-event timestamps | **4 verified official failure intervals (Air Leaks):**<br>1. `2020-04-18 00:00:00` → `2020-04-18 23:59:00`<br>2. `2020-05-29 23:30:00` → `2020-05-30 06:00:00`<br>3. `2020-06-05 10:00:00` → `2020-06-07 14:30:00`<br>4. `2020-07-15 14:30:00` → `2020-07-15 19:00:00` |
+| Ground-truth labeling strategy | **Binary Labeling:** Each sensor reading row is mapped to `0` (Normal operation) or `1` (Failure period) if its timestamp falls inclusively within any of the 4 recorded failure intervals (`[start_time, end_time]`). Overlapping/subsequent windowing aggregates these labels. |
+| Train/validation/test split | **Chronological Split:** Divided sequentially by time (e.g., initial months allocated for training/baseline profiling, and later months containing failure events allocated for validation/testing) to prevent data leakage in time-series forecasting. |
 
-> Raw dataset files should **not** be committed to the repository unless the license allows it. `[TODO: add download instructions.]`
+> Raw dataset files should **not** be committed to the repository unless the license allows it. **Download Instructions:** Download the dataset from Kaggle (`MetroPT3(AirCompressor).csv`) and place it locally inside the project's data directory or working folder before running the preprocessing pipeline.
 
 ### Timestamp Alignment and Failure-Event Labels
 
-- Sensor timestamps are normalized to a single time zone and resolution; duplicates and gaps are handled explicitly `[TODO: document actual handling]`.
+- Sensor timestamps are normalized to a single time zone and resolution; duplicates and gaps are handled explicitly **by sorting chronologically, parsing datetime formats, and applying linear imputation for missing values in the preceding preprocessing pipeline (`data_imputed.csv`)**.
 - Failure-event intervals are joined to sensor windows by timestamp to derive labels.
-- Labeling rules (e.g., how a window overlapping a failure interval is labeled) must be defined once and applied consistently `[TODO]`.
-
+- Labeling rules (e.g., how a window overlapping a failure interval is labeled) must be defined once and applied consistently **using inclusive boundary matching (`between` method), where any sensor record falling inside the official `start_time` and `end_time` of the 4 `Air Leak` failure events is strictly assigned `ground_truth = 1`, and all other records are assigned `0`**.
 ### Avoiding Data Leakage
 
 Time-series data must be split **chronologically**, not randomly:
