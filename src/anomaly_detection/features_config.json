@@ -1,0 +1,48 @@
+{
+    "ordered_features": [
+        "TP2",
+        "TP3",
+        "H1",
+        "DV_pressure",
+        "Reservoirs",
+        "Oil_temperature",
+        "Motor_current",
+        "COMP",
+        "DV_eletric",
+        "Towers",
+        "MPG",
+        "LPS",
+        "Pressure_switch",
+        "Oil_level",
+        "Caudal_impulses"
+    ],
+    "excluded_columns": [
+        "timestamp",
+        "segment",
+        "ground_truth",
+        "window_id"
+    ],
+    "cutoff_timestamps": {
+        "train_val": "2020-04-12 00:00:00",
+        "val_test": "2020-07-01 00:00:00"
+    },
+    "failures_distribution": {
+        "train": [
+            1,
+            2
+        ],
+        "validation": [
+            3
+        ],
+        "test": [
+            4
+        ]
+    },
+    "total_rows": 1462200,
+    "splits_count": {
+        "train": 521898,
+        "validation": 502345,
+        "test": 437957
+    },
+    "random_state": 42
+}
