@@ -1,4 +1,4 @@
-# Sentinel / AutoDiag — Automated Diagnostics and Root Cause Analysis
+# Automated Diagnostics and Root Cause Analysis
 
 > **DRAFT — NOT VERIFIED AGAINST THE REPOSITORY.**
 > This README was drafted without access to the source code. Every item marked
