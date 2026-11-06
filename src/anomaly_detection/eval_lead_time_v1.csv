@@ -1,0 +1,7 @@
+method,offset_rows,failure_windows,failure_windows_detected,windows_before_failure,lead_windows_in_a_row,flagged_in_last_hour
+isolation_forest,0,73,73,72,2,2
+zscore_3sigma,0,73,73,72,3,10
+isolation_forest,10,72,72,72,2,2
+zscore_3sigma,10,72,72,72,3,9
+isolation_forest,20,73,73,71,2,2
+zscore_3sigma,20,73,73,71,2,10
