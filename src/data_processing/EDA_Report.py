@@ -193,90 +193,39 @@ gaps.head(15)
 
 MIN_FROZEN_DURATION = pd.Timedelta(minutes=5)
 
+same_as_previous = df[A].eq(df[A].shift(1)).all(axis=1)
+same_as_previous.iloc[0] = False
+run_id = same_as_previous.ne(same_as_previous.shift(fill_value=False)).cumsum()
 candidate_rows = []
-rows_to_remove = set()
-
-# Process each segment independently if segment exists.
-if 'segment' in df.columns:
-    groups = df.groupby('segment', sort=False, dropna=False)
-else:
-    groups = [(None, df)]
-
-for segment_value, group in groups:
-    group = group.sort_values('timestamp', kind='stable')
-
-    same_as_previous = group[A].eq(
-        group[A].shift(1)
-    ).all(axis=1)
-
-    same_as_previous.iloc[0] = False
-
-    run_id = same_as_previous.ne(
-        same_as_previous.shift(fill_value=False)
-    ).cumsum()
-
-    for _, run in group.loc[same_as_previous].groupby(run_id[same_as_previous]):
-        first_idx = run.index[0]
-        last_idx = run.index[-1]
-
-        first_pos = group.index.get_loc(first_idx)
-        last_pos = group.index.get_loc(last_idx)
-
-        # Include the row immediately before the repeated readings.
-        start_idx = group.index[first_pos - 1]
-
-        start_time = group.loc[start_idx, 'timestamp']
-        end_time = group.loc[last_idx, 'timestamp']
-
-        duration = end_time - start_time
-
-        if duration >= MIN_FROZEN_DURATION:
-            candidate_rows.append({
-                'segment': segment_value,
-                'start_time': start_time,
-                'end_time': end_time,
-                'duration': duration,
-                'duration_seconds': duration.total_seconds(),
-                'repeated_steps': int(len(run)),
-            })
-
-            # Collect all rows belonging to the frozen period.
-            rows_to_remove.update(
-                group.index[first_pos - 1:last_pos + 1]
-            )
+for _, run in df.loc[same_as_previous].groupby(run_id[same_as_previous]):
+    first_idx = run.index[0]
+    last_idx = run.index[-1]
+    start_idx = max(df.index.min(), first_idx - 1)
+    start_time = df.loc[start_idx, 'timestamp']
+    end_time = df.loc[last_idx, 'timestamp']
+    duration = end_time - start_time
+    if duration >= MIN_FROZEN_DURATION:
+        candidate_rows.append({
+            'start_time': start_time,
+            'end_time': end_time,
+            'duration': duration,
+            'duration_seconds': duration.total_seconds(),
+            'repeated_steps': int(len(run)),
+        })
 
 frozen_periods = pd.DataFrame(candidate_rows, columns=[
-    'segment',
-    'start_time',
-    'end_time',
-    'duration',
-    'duration_seconds',
-    'repeated_steps'
+    'start_time', 'end_time', 'duration', 'duration_seconds', 'repeated_steps'
 ])
 
-if 'segment' not in df.columns:
-    frozen_periods = frozen_periods.drop(columns=['segment'])
-
-# Export frozen periods before removing rows.
-frozen_periods.to_csv(
-    OUT_DIR / 'frozen_logger_periods.csv',
-    index=False
-)
-
-# Remove frozen rows from the dataset.
-before_rows = len(df)
-
-df = df.drop(index=list(rows_to_remove)).copy()
-
-removed_rows = before_rows - len(df)
+df['frozen_logger_flag'] = False
+for _, period in frozen_periods.iterrows():
+    df.loc[df['timestamp'].between(period['start_time'], period['end_time']), 'frozen_logger_flag'] = True
 
 print('Minimum duration:', MIN_FROZEN_DURATION)
 print('Candidate frozen-logger periods:', len(frozen_periods))
-print('Rows before removal:', before_rows)
-print('Rows removed:', removed_rows)
-print('Rows after removal:', len(df))
-print('Saved frozen periods:', OUT_DIR / 'frozen_logger_periods.csv')
-
+print('Flagged rows:', int(df['frozen_logger_flag'].sum()))
+display(frozen_periods.head(20))
+frozen_periods.to_csv(OUT_DIR / 'frozen_logger_periods.csv', index=False)
 
 
 # --- Notebook code cell 14 ---
