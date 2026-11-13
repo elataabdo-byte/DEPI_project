@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 
 input_file = "sensor_baseline.csv"
 df = pd.read_csv(input_file)
-
+ 
 df = df.interpolate(method='linear', limit=5, limit_direction='both')
 df = df.bfill().ffill()
 
