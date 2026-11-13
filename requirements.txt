@@ -1,6 +1,11 @@
 
-pandas
 numpy
+pandas
+scipy
+pyarrow
 scikit-learn
-streamlit
+tensorflow
+joblib
+matplotlib
 plotly
+streamlit
