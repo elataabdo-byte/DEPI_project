@@ -1,0 +1,28 @@
+{
+  "timestamp_col": "timestamp",
+  "segment_col": "segment",
+  "gap_multiplier": 3.0,
+  "name": "metro",
+  "work_dir": "out/metro_full",
+  "input_path": "source.csv",
+  "drop_columns": ["Unnamed: 0"],
+  "dup_policy": "none",
+  "missing_policy": "none",
+  "gt_mode": "intervals",
+  "gt_col": "ground_truth",
+  "window_seconds": 300,
+  "stride_seconds": 300,
+  "gap_threshold_seconds": 30,
+  "exclude_cols": [
+    "COMP", "DV_eletric", "Towers", "MPG", "LPS",
+    "Pressure_switch", "Oil_level", "Caudal_impulses"
+  ],
+  "split": {
+    "mode": "events",
+    "test_events": 2,
+    "lead_hours": 24,
+    "val_ratio": 0.15,
+    "test_ratio": 0.20,
+    "gap_windows": 20
+  }
+}

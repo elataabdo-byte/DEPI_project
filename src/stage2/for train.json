@@ -1,0 +1,42 @@
+{
+  "seed": 42,
+  "device": "auto",
+  "tasks": [
+    {
+      "prefix": "iot",
+      "data_dir": "D:/processed_outputs/iot",
+      "hidden_size": 64,
+      "latent_dim": 16,
+      "num_layers": 1,
+      "epochs": 50,
+      "batch_size": 32,
+      "learning_rate": 0.001,
+      "patience": 10,
+      "threshold_percentile": 99
+    },
+    {
+      "prefix": "pump",
+      "data_dir": "D:/processed_outputs/pump",
+      "hidden_size": 128,
+      "latent_dim": 32,
+      "num_layers": 1,
+      "epochs": 50,
+      "batch_size": 32,
+      "learning_rate": 0.001,
+      "patience": 10,
+      "threshold_percentile": 99.5
+    },
+    {
+      "prefix": "metro",
+      "data_dir": "D:/processed_outputs/metro",
+      "hidden_size": 64,
+      "latent_dim": 16,
+      "num_layers": 1,
+      "epochs": 50,
+      "batch_size": 64,
+      "learning_rate": 0.001,
+      "patience": 10,
+      "threshold_percentile": 90
+    }
+  ]
+}

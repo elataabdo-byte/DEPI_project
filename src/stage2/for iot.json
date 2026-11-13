@@ -1,0 +1,32 @@
+{
+  "timestamp_col": "timestamp",
+  "segment_col": "segment",
+  "gap_multiplier": 3.0,
+  "name": "iot",
+  "work_dir": "out/iot",
+  "input_path": "data_clean IoT.csv",
+  "drop_columns": [],
+  "dup_policy": "drop",
+  "missing_policy": "ffill",
+  "gt_mode": "none",
+  "rules": {
+    "TDS": {"min": 0},
+    "pH":  {"min": 0, "max": 14}
+  },
+  "window_seconds": 300,
+  "stride_seconds": 300,
+  "gap_threshold_seconds": 30,
+  "exclude_cols": [
+    "id",
+    "pH_reducer", "add_water", "nutrients_adder", "humidifier", "ex_fan"
+  ],
+  "protect_cols": ["id"],
+   "split": {
+    "mode": "events",
+    "test_events": 1,
+    "lead_hours": 48,
+    "val_ratio": 0.15,
+    "test_ratio": 0.20,
+    "gap_windows": 2
+}
+}

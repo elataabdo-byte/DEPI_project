@@ -1,0 +1,22 @@
+{
+  "tasks": [
+    {
+      "prefix": "iot",
+      "data_dir": "D:/processed_outputs/iot",
+      "seq_len": 60,
+      "stride": 30
+    },
+    {
+      "prefix": "pump",
+      "data_dir": "D:/processed_outputs/pump",
+      "seq_len": 60,
+      "stride": 30
+    },
+    {
+      "prefix": "metro",
+      "data_dir": "D:/processed_outputs/metro",
+      "seq_len": 60,
+      "stride": 30
+    }
+  ]
+}
