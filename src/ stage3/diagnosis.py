@@ -1,32 +1,4 @@
-"""
-diagnose.py
-
-Per-sequence diagnosis for anomaly detection.
-
-For each dataset, computes only:
-  1. Culprit sensors (top 3 by per-feature reconstruction error)
-  2. Z-scores per culprit (max |z| and mean direction, from normalized sequences)
-  3. Confidence level (ratio of reconstruction error to threshold)
-
-Context columns (identifiers and metadata) are also included so the output
-can feed a dashboard directly: seq_id, window_id_start, timestamps, segment,
-reconstruction_error, threshold, prediction, gt, status (TP/FP/FN/TN).
-
-Reads:
-  {data_dir}/{prefix}_model.pt
-  {data_dir}/{prefix}_report.json
-  {data_dir}/{prefix}_threshold.json
-  {data_dir}/{prefix}_features.json
-  {data_dir}/{prefix}_test_errors.npy
-  {data_dir}/{prefix}_test_preds.npy
-  {data_dir}/{prefix}_seq_test.npy
-  {data_dir}/{prefix}_seq_test_gt.npy
-  {data_dir}/{prefix}_seq_test_wid.npy
-  {data_dir}/{prefix}_meta_test.csv
-
-Writes:
-  {out_dir}/{prefix}_diagnosis.csv
-"""
+ 
 
 import argparse
 import json
