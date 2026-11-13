@@ -1,0 +1,60 @@
+{
+  "version": "v1_20261110_202837",
+  "source_file": "data_clean IOT.csv",
+  "source_hash": "e8ee56a819df4c052341cc7e8dae4f8185283dfcba0f7f937e494183d0e24916",
+  "generated": "2026-11-10T20:28:37.838625",
+  "total_rows": 50570,
+  "reference_rows": 50534,
+  "excluded_rows": 36,
+  "physical_ranges": {
+    "pH": [
+      0,
+      14
+    ],
+    "TDS": [
+      0,
+      5000
+    ],
+    "DHT_temp": [
+      -20,
+      60
+    ],
+    "DHT_humidity": [
+      0,
+      100
+    ],
+    "water_temp": [
+      -5,
+      50
+    ],
+    "water_level": [
+      0,
+      3
+    ]
+  },
+  "continuous_sensors": [
+    "pH",
+    "TDS",
+    "DHT_temp",
+    "DHT_humidity",
+    "water_temp"
+  ],
+  "mahalanobis": {
+    "threshold_percentile": 0.995,
+    "threshold_value": 230.05136395848191,
+    "flagged_rows": 253,
+    "flag_rate": 0.00500653025685677,
+    "condition_number": 2625647.539359302
+  },
+  "isolation_forest": {
+    "contamination": 0.01,
+    "n_estimators": 300,
+    "threshold_value": 0.596725938964705,
+    "flagged_rows": 506,
+    "flag_rate": 0.01001306051371354
+  },
+  "agreement": {
+    "flagged_by_any": 749,
+    "flagged_by_both": 10
+  }
+}
