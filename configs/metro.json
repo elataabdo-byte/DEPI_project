@@ -1,0 +1,76 @@
+﻿{
+    "timestamp_col": "timestamp",
+    "segment_col": "segment",
+    "gap_multiplier": 3.0,
+    "name": "metro",
+    "work_dir": "out/metro",
+    "raw_input_path": "datasets/metro/windows/data_windowed.csv",
+    "drop_columns": [
+        "Unnamed: 0"
+    ],
+    "dup_policy": "none",
+    "missing_policy": "none",
+    "gt_mode": "intervals",
+    "gt_col": "ground_truth",
+    "events_path": "data/failure_events_clean.csv",
+    "events_start_col": "start_time",
+    "events_end_col": "end_time",
+    "window_seconds": 300,
+    "stride_seconds": 300,
+    "gap_threshold_seconds": 30,
+    "minute_features": {
+        "enabled": true,
+        "required_digital": "COMP",
+        "min_rows_for_frozen": 3
+    },
+    "frozen_min_duration_minutes": 5,
+    "frozen_sensor_cols": [
+        "TP2",
+        "TP3",
+        "H1",
+        "DV_pressure",
+        "Reservoirs",
+        "Oil_temperature",
+        "Motor_current"
+    ],
+    "frozen_action": "drop",
+    "input_path": "datasets/metro/windows/data_windowed.csv",
+    "window_id_col": "window_id",
+    "window_label_col": "window_label",
+    "window_size": 30,
+    "analog_cols": [
+        "TP2",
+        "TP3",
+        "H1",
+        "DV_pressure",
+        "Reservoirs",
+        "Oil_temperature",
+        "Motor_current"
+    ],
+    "sensor_cols": [
+        "TP2",
+        "TP3",
+        "H1",
+        "DV_pressure",
+        "Reservoirs",
+        "Oil_temperature",
+        "Motor_current"
+    ],
+    "label_values": [
+        0,
+        1
+    ],
+    "require_ground_truth": true,
+    "require_window_id": true,
+    "require_complete_windows": false,
+    "check_timestamp_order": true,
+    "check_duplicate_timestamps": true,
+    "check_duplicate_rows": true,
+    "check_missing_values": true,
+    "check_infinite_values": true,
+    "check_constant_sensors": true,
+    "fail_on_error": true,
+    "labeling_input_path": "out/metro/3_labeled/data_labeled.csv",
+    "labeling_output_path": "out/metro/4_windows/data_windows.csv",
+    "output_path": "datasets/metro/windows/data_windowed.csv"
+}

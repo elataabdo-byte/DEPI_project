@@ -1,0 +1,54 @@
+﻿{
+    "timestamp_col":  "timestamp",
+    "segment_col":  "segment",
+    "gap_multiplier":  3.0,
+    "name":  "pump",
+    "work_dir":  "out/pump",
+    "raw_input_path":  "data/sensor.csv",
+    "drop_columns":  [
+                         "Unnamed: 0"
+                     ],
+    "dup_policy":  "drop",
+    "missing_policy":  "interpolate",
+    "gt_mode":  "column",
+    "gt_col":  "ground_truth",
+    "label_col_raw":  "machine_status",
+    "label_map":  {
+                      "NORMAL":  0,
+                      "RECOVERING":  1,
+                      "BROKEN":  1
+                  },
+    "protect_cols":  [
+                         "machine_status"
+                     ],
+    "window_seconds":  180,
+    "stride_seconds":  180,
+    "gap_threshold_seconds":  180,
+    "exclude_cols":  [
+                         "machine_status"
+                     ],
+    "input_path":  "datasets/pump/windows_pump/data_windowed.csv",
+    "window_id_col":  "window_id",
+    "window_label_col":  "window_label",
+    "window_size":  30,
+    "analog_cols":  [
+
+                    ],
+    "sensor_cols":  [
+
+                    ],
+    "label_values":  [
+                         0,
+                         1
+                     ],
+    "require_ground_truth":  true,
+    "require_window_id":  true,
+    "require_complete_windows":  false,
+    "check_timestamp_order":  true,
+    "check_duplicate_timestamps":  true,
+    "check_duplicate_rows":  true,
+    "check_missing_values":  true,
+    "check_infinite_values":  true,
+    "check_constant_sensors":  true,
+    "fail_on_error":  true
+}

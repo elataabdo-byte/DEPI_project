@@ -1,0 +1,58 @@
+﻿{
+    "timestamp_col":  "timestamp",
+    "segment_col":  "segment",
+    "gap_multiplier":  3.0,
+    "name":  "iot",
+    "work_dir":  "out/iot",
+    "raw_input_path":  "data/IoTData --Raw--.csv",
+    "drop_columns":  [
+
+                     ],
+    "dup_policy":  "drop",
+    "missing_policy":  "ffill",
+    "gt_mode":  "none",
+    "window_seconds":  180,
+    "stride_seconds":  180,
+    "gap_threshold_seconds":  30,
+    "exclude_cols":  [
+                         "id"
+                     ],
+    "protect_cols":  [
+                         "id"
+                     ],
+    "input_path":  "datasets/hyperponc/windows_hyperponc/data_windowed.csv",
+    "window_id_col":  "window_id",
+    "window_label_col":  "window_label",
+    "window_size":  30,
+    "analog_cols":  [
+                        "pH",
+                        "TDS",
+                        "water_level",
+                        "DHT_temp",
+                        "DHT_humidity",
+                        "water_temp"
+                    ],
+    "sensor_cols":  [
+                        "pH",
+                        "TDS",
+                        "water_level",
+                        "DHT_temp",
+                        "DHT_humidity",
+                        "water_temp"
+                    ],
+    "label_values":  [
+                         0,
+                         1
+                     ],
+    "require_ground_truth":  false,
+    "require_window_id":  true,
+    "require_complete_windows":  false,
+    "check_timestamp_order":  true,
+    "check_duplicate_timestamps":  true,
+    "check_duplicate_rows":  true,
+    "check_missing_values":  true,
+    "check_infinite_values":  true,
+    "check_constant_sensors":  true,
+    "fail_on_error":  true,
+    "output_path":  "datasets/hyperponc/windows_hyperponc/data_windowed.csv"
+}
